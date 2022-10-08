@@ -11,14 +11,12 @@ form.addEventListener('submit', (event) => {
         name,
         content
     };
-
-    form.style.display = 'none';
     
     fetch(API_URL, {
         method: 'POST',
         body: JSON.stringify(post),
         headers: {
-            'content-type': 'applicationw/json'
+            'content-type': 'application/json'
         }
-    })
+    });
 });
