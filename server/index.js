@@ -1,8 +1,10 @@
 const express = require ('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use(express.json());
 
@@ -18,20 +20,18 @@ function isValidPost(post) {
 }
 
 app.post('/posts',(req, res) => {
-    // if (isValidPost(req.body)){
-    //     const post = {
-    //         name: req.body.name.toString(),
-    //         content:  req.body.content.toString()
-    //     };
-    //     console.log(post);
-    // }else {
-    //     res.status(422);
-    //     res.json({
-    //         message: 'Name and content are required!'
-    //     });
-    // }
-
-    console.log(req.body);
+    if (isValidPost(req.body)){
+        const post = {
+            name: req.body.name.toString(),
+            content: req.body.content.toString()
+        };
+        console.log(post);
+    }else {
+        res.status(422);
+        res.json({
+            message: 'Name and content are required!'
+        });
+    }
 
 });
 
