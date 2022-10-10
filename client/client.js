@@ -1,5 +1,5 @@
 const form = document.querySelector('form');
-const API_URL = 'http://localhost:5000/posts'
+const API_URL = (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
