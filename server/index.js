@@ -1,10 +1,11 @@
 const express = require ('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
+const monk = require('monk');
 
 const app = express();
+const db = monk('localhost/hnmtwt');
+const posts = db.get('posts');
 
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use(express.json());
 
@@ -23,9 +24,14 @@ app.post('/posts',(req, res) => {
     if (isValidPost(req.body)){
         const post = {
             name: req.body.name.toString(),
-            content: req.body.content.toString()
+            content: req.body.content.toString(),
+            created: new Date()
         };
-        console.log(post);
+        posts
+            .insert(post)
+            .then(createdPost => {
+                res.json(createdPost);
+            });
     }else {
         res.status(422);
         res.json({
